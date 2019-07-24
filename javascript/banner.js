@@ -1,3 +1,116 @@
+function webSearch(argument) {
+	// body...
+	var searchBar = document.querySelector("input#web-search");
+	var hotSearch = document.querySelector("div.hot-search");
+	addEvent(searchBar,"focus",function (argument) {
+		// body...
+		hotSearch.style.display = "block";
+		addClassname(searchBar,"focusSearch");
+	});
+	addEvent(searchBar,"blur",function (e) {
+		// body...
+		var e = e || window.event;
+		if (e.target != hotSearch) {
+			hotSearch.style.display = "none";
+			removeClassname(searchBar,"focusSearch");
+		}
+	})
+}
+webSearch();
+function displayShopCode(argument) {
+	// body...
+	var shopCode = document.querySelector("div.shop-code"),
+	shopItem = document.querySelector("li.shop");
+	childNodeStopPropagation(shopCode,"mouseover");
+	childNodeStopPropagation(shopItem,"mouseover");
+	addEvent(shopItem,"mouseenter",function (argument) {
+		// body...
+		shopCode.style.display = "block";
+	});
+	addEvent(window,"mouseover",function (e) {
+		// body...
+		var e = e || window.event;
+		if (e.target != shopCode && e.target != shopItem) {
+			shopCode.style.display = "none";
+		}
+	})
+}
+displayShopCode();
+function newsBanner(argument) {
+	// body...
+	var banner = document.querySelector("div.notice-center ul"),
+	rightButton = document.querySelector("div.side-arrow a:last-child")
+	leftButton = document.querySelector("div.side-arrow a:first-child"),
+	count = -1170;
+	function turnRight(argument) {
+		// body...
+		if (count >= -7020) {
+			count -=1170;
+			banner.style.transition = "500ms left";
+			banner.style.left = count + "px";
+			if(count == -7020){
+				setTimeout(function (argument) {
+					// body...
+					count = -1170;
+					banner.style.left = count + "px";
+					banner.style.transition = "0s left";
+				},500);
+			}
+		}
+	}
+	function turnLeft(argument) {
+		// body...
+		if (count <= 0) {
+			count += 1170;
+			banner.style.transition = "500ms left";
+			banner.style.left = count + "px";
+			if (count == 0) {
+				setTimeout(function (argument) {
+					// body...
+					count = -5850;
+					banner.style.left = count + "px";
+					banner.style.transition = "0s left";
+				},500);
+			}
+		}
+	}
+	addEvent(rightButton,"click",function (argument) {
+		// body...
+		clearInterval(bannerSwitch);
+		turnRight();
+		bannerSwitch = setInterval(function (argument) {
+		// body...
+		turnRight();
+		},3000);
+
+	});
+	addEvent(leftButton,"click",function (argument) {
+		// body...
+		clearInterval(bannerSwitch);
+		turnLeft();
+		bannerSwitch = setInterval(function (argument) {
+		// body...
+		turnRight();
+		},3000);
+	})
+	bannerSwitch = setInterval(function (argument) {
+		// body...
+		turnRight();
+	},3000);
+	addEvent(window,"focus",function (argument) {
+		// body...
+		clearInterval(bannerSwitch);
+		bannerSwitch = setInterval(function (argument) {
+			// body...
+			turnRight();
+		},3000);
+	});
+	addEvent(window,"blur",function (argument) {
+		// body...
+		clearInterval(bannerSwitch);
+	})
+}
+newsBanner();
 function bannerMove(argument) {
 	// body...
 	var banner = document.querySelector("div.imageCenter ul"),
